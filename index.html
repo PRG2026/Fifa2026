@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA World Cup 2026 - Prediction Hub</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚽ FIFA World Cup 2026</h1>
+            <p>Prediction Hub - Test Your Football Insights</p>
+            <div class="hero-cards">
+                <div class="player-card">
+                    <img src="images/cr7.svg" alt="CR7" />
+                    <div class="player-info">
+                        <div class="player-name">Cristiano Ronaldo</div>
+                        <div class="player-detail">Portugal • Iconic Finisher</div>
+                    </div>
+                </div>
+                <div class="player-card">
+                    <img src="images/messi.svg" alt="Messi" />
+                    <div class="player-info">
+                        <div class="player-name">Lionel Messi</div>
+                        <div class="player-detail">Argentina • Creative Maestro</div>
+                    </div>
+                </div>
+                <div class="player-card">
+                    <img src="images/neymar.svg" alt="Neymar" />
+                    <div class="player-info">
+                        <div class="player-name">Neymar Jr.</div>
+                        <div class="player-detail">Brazil • Flair Playmaker</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="main-nav" style="display:none;">
+            <button class="nav-btn active" data-section="predictions">🎯 Make Predictions</button>
+            <button class="nav-btn" data-section="leaderboard">🏆 Top Predictors</button>
+            <button class="nav-btn" data-section="schedule">📅 Schedule & Standings</button>
+            <button class="nav-btn" id="adminNavButton" data-section="admin" style="display:none;">🛠️ Admin Panel</button>
+        </nav>
+        <div class="auth-toolbar" id="authToolbar" style="display:none;">
+            <div class="auth-label">Logged in as <strong id="loggedInUserName"></strong> (<span id="loggedInUserMobile"></span>)</div>
+            <button class="btn-secondary" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="content">
+            <!-- Login Section -->
+            <section id="login" class="section active">
+                <h2>Login to Prediction Hub</h2>
+                <div class="login-form">
+                    <div class="form-group">
+                        <label for="loginMobile">Mobile Number</label>
+                        <input type="text" id="loginMobile" placeholder="Enter your mobile number">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPin">PIN</label>
+                        <input type="password" id="loginPin" placeholder="Enter your PIN">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="loginUser()">🔐 Login</button>
+                    </div>
+                    <p class="login-note">Default PINs are set for each user. Admin login: mobile 9999999999, PIN 0000.</p>
+                </div>
+            </section>
+
+            <!-- Predictions Section -->
+            <section id="predictions" class="section">
+                <h2>Make Your Predictions</h2>
+                <div class="success-message" id="successMessage">
+                    ✓ Your predictions have been saved successfully!
+                </div>
+                <div class="prediction-form">
+                    <div class="user-card">
+                        <p>Logged in as <strong id="currentUserNameLabel"></strong></p>
+                        <p>Mobile: <strong id="currentUserMobileLabel"></strong></p>
+                    </div>
+                    <div id="bonusStatusMessage" class="bonus-status-message" style="display:none; margin-bottom: 20px; color:#1e3c72;"></div>
+                    <div class="change-pin-section">
+                        <h3>Change PIN</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="oldPin">Old PIN</label>
+                                <input type="password" id="oldPin" placeholder="Current PIN">
+                            </div>
+                            <div class="form-group">
+                                <label for="newPin">New PIN</label>
+                                <input type="password" id="newPin" placeholder="New PIN">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPin">Confirm PIN</label>
+                                <input type="password" id="confirmPin" placeholder="Confirm PIN">
+                            </div>
+                        </div>
+                        <div class="button-group" style="margin-top: 10px;">
+                            <button class="btn-primary" onclick="changePin()">Update PIN</button>
+                        </div>
+                    </div>
+                    <h3 style="margin-top: 30px; margin-bottom: 15px; color: #1e3c72;">Daily Match Predictions</h3>
+                    <p id="predictionDayInfo" style="margin-bottom: 15px; color: #666; font-size: 0.95em;">Only the active prediction day is shown here. Matches for other days are hidden to reduce confusion.</p>
+                    <div id="matchesContainer"></div>
+
+                    <div id="bonusSection" class="bonus-section">
+                        <h3>Bonus Predictions</h3>
+                        <p>Submit your tournament bonus picks before the campaign begins.</p>
+                        <div class="bonus-grid">
+                            <div class="form-group">
+                                <label for="bonusWinner">World Cup Winner</label>
+                                <input type="text" id="bonusWinner" placeholder="Enter team name">
+                            </div>
+                            <div class="form-group">
+                                <label for="bonusRunnerUp">Runner Up</label>
+                                <input type="text" id="bonusRunnerUp" placeholder="Enter team name">
+                            </div>
+                            <div class="form-group">
+                                <label for="bonusGoldenBoot">Golden Boot Winner</label>
+                                <input type="text" id="bonusGoldenBoot" placeholder="Enter player name">
+                            </div>
+                            <div class="form-group">
+                                <label for="bonusGoalkeeper">Best Goalkeeper</label>
+                                <input type="text" id="bonusGoalkeeper" placeholder="Enter player name">
+                            </div>
+                            <div class="form-group" style="grid-column: span 2;">
+                                <label for="bonusTopScoringTeam">Top Scoring Team</label>
+                                <input type="text" id="bonusTopScoringTeam" placeholder="Enter team name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group" style="margin-top: 30px;">
+                        <button class="btn-primary" onclick="savePredictions()">💾 Save Predictions</button>
+                        <button class="btn-secondary" onclick="clearPredictions()">🔄 Clear Form</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Leaderboard Section -->
+            <section id="leaderboard" class="section">
+                <h2>🏆 Top 10 Predictors</h2>
+                <div id="leaderboardContainer">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📊</div>
+                        <p>No predictions yet. Start making predictions to see the leaderboard!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Schedule and Standings Section -->
+            <section id="schedule" class="section">
+                <h2>📅 Tournament Schedule</h2>
+                <div class="live-update-info">
+                    <span>Live refresh every 10 minutes.</span>
+                    <span id="lastUpdatedTime">Last updated: --</span>
+                </div>
+                <div class="schedule-container" id="scheduleContainer"></div>
+
+                <h2>📊 Group Stage Standings</h2>
+                <div class="standings-container" id="standingsContainer"></div>
+            </section>
+
+            <!-- Admin Section -->
+            <section id="admin" class="section">
+                <h2>🛠️ Admin Control Panel</h2>
+                <div class="admin-panel">
+                    <div class="admin-card">
+                        <h3>User Management</h3>
+                        <div id="adminUsersContainer"></div>
+                    </div>
+                    <div class="admin-card">
+                        <h3>Match Management</h3>
+                        <div id="adminMatchesContainer"></div>
+                    </div>
+                    <div class="admin-card">
+                        <h3>Bonus Results</h3>
+                        <div id="adminBonusContainer"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="js/app-api.js"></script>
+</body>
+</html>

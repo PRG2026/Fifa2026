@@ -1,0 +1,15 @@
+{
+  "name": "fifa2026-backend",
+  "version": "1.0.0",
+  "description": "FIFA 2026 Prediction Hub backend with MySQL integration",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.4",
+    "mysql2": "^3.4.3"
+  }
+}
